@@ -60,6 +60,9 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
 
         for php_file in root.findall('./project//file'):
             if php_file.get('name') == filename:
+                metrics = php_file.find('./metrics')
+                loc = int(metrics.get('loc'))
+                print 'SublimePHPCoverage: lines of code: %s' % loc
                 for line in php_file.findall('line'):
                     # skip non-statement lines
                     if line.get('type') != 'stmt':
@@ -67,6 +70,11 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
 
                     num = int(line.get('num'))
                     count = int(line.get('count'))
+
+                    # quirks in the coverage data: skip line #0 and any
+                    # lines greater than the number of lines in the file
+                    if num > loc or num == 0:
+                        continue
 
                     # subtract 1 for zero-based index used by Sublime
                     region = view.full_line(view.text_point(num - 1, 0))
