@@ -58,7 +58,7 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
         coverage = os.path.join(project_root, 'tests/coverage/clover.xml')
         root = ET.parse(coverage)
 
-        for php_file in root.findall('./project/file'):
+        for php_file in root.findall('./project//file'):
             if php_file.get('name') == filename:
                 for line in php_file.findall('line'):
                     # skip non-statement lines
