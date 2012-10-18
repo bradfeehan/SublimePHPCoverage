@@ -38,6 +38,7 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
         view.erase_status('SublimePHPCoverageGood')
         view.erase_regions('SublimePHPCoverageBad')
         view.erase_regions('SublimePHPCoverageGood')
+        view.set_status('SublimePHPCoveragePercentage', '')
 
         filename = view.file_name()
         print 'SublimePHPCoverage: Filename: %s' % filename
@@ -83,6 +84,12 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
                         good.append(region)
                     else:
                         bad.append(region)
+                covered = int(metrics.get('coveredstatements'))
+                total = int(metrics.get('statements'))
+                percentage = 100 * covered / float(total)
+                coverage = '%d/%d lines (%.2f%%)' % (covered, total, percentage)
+                print 'Code coverage: %s' % coverage
+                view.set_status('SublimePHPCoveragePercentage', 'Code coverage: %s' % coverage)
                 break
 
         # update highlighted regions
