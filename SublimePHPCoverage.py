@@ -79,3 +79,12 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
             view.add_regions('SublimePHPCoverageGood', bad, 'markup.deleted', 'bookmark', sublime.HIDDEN)
         if good:
             view.add_regions('SublimePHPCoverageBad', good, 'markup.inserted', 'dot', sublime.HIDDEN)
+
+
+class UpdatePhpCoverageCommand(sublime_plugin.ApplicationCommand):
+    """Update code coverage highlights in any currently open files."""
+
+    def run(self):
+        for window in sublime.windows():
+            for view in window.views():
+                view.run_command('show_php_coverage')
