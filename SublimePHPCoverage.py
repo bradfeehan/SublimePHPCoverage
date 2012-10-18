@@ -40,14 +40,16 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
         view.erase_regions('SublimePHPCoverageGood')
 
         filename = view.file_name()
+        print 'SublimePHPCoverage: Filename: %s' % filename
 
         # don't run for unsaved files
         if not filename:
+            print 'SublimePHPCoverage: Not running for unsaved file'
             return
 
         project_root = find_project_root(filename)
         if not project_root:
-            print 'Could not find coverage directory.'
+            print 'SublimePHPCoverage: Could not find coverage directory.'
             return
 
         good = []
@@ -59,6 +61,7 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
         for php_file in root.findall('./project/file'):
             if php_file.get('name') == filename:
                 for line in php_file.findall('line'):
+                    # skip non-statement lines
                     if line.get('type') != 'stmt':
                         continue
 
