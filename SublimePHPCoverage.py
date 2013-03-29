@@ -23,10 +23,10 @@ class SublimePHPCoverageListener(sublime_plugin.EventListener):
         if 'source.php' not in view.scope_name(0):
             return
 
-        view.run_command('show_php_coverage')
+        view.run_command('phpcoverage_update')
 
 
-class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
+class PhpcoverageUpdateCommand(sublime_plugin.TextCommand):
     """Highlight uncovered lines in the current file based on a previous
     coverage run."""
 
@@ -99,10 +99,10 @@ class ShowPhpCoverageCommand(sublime_plugin.TextCommand):
             view.add_regions('SublimePHPCoverageBad', good, 'markup.inserted', 'dot', sublime.HIDDEN)
 
 
-class UpdatePhpCoverageCommand(sublime_plugin.ApplicationCommand):
+class PhpcoverageUpdateAllCommand(sublime_plugin.ApplicationCommand):
     """Update code coverage highlights in any currently open files."""
 
     def run(self):
         for window in sublime.windows():
             for view in window.views():
-                view.run_command('show_php_coverage')
+                view.run_command('phpcoverage_update')

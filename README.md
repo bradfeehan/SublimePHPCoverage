@@ -55,12 +55,12 @@ aren't executable (not counted in code coverage data).
 You can hit ⌘⇧C to trigger a refresh of the code coverage data for the
 currently focused view (tab).
 
-The pluginalse  adds an "update_php_coverage" command, which can be
+The pluginalse  adds an "phpcoverage_update" command, which can be
 used to refresh the code coverage data for all open files. This command
 can be called in a variety of ways, e.g. from the command line:
 
 ```bash
-$ subl --command update_php_coverage
+$ subl --command phpcoverage_update
 ```
 
 This is handy to include after running PHPUnit in a script, as it'll
