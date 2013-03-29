@@ -9,7 +9,9 @@
             "children":
             [
                 {"caption":"Update All", "command": "phpcoverage_update_all" },
-                {"caption":"Update Current File", "command": "phpcoverage_update" }
+                {"caption":"Update Current File", "command": "phpcoverage_update" },
+                {"caption":"Clear All File Markers", "command": "phpcoverage_clear_markers" },
+                {"caption":"Generate Coverage Report", "command": "phpcoverage_generate_report" }
             ]
         }
     ]

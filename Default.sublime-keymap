@@ -1,3 +1,5 @@
 [
-	{ "keys": ["super+shift+c"], "command": "phpcoverage_update_all" }
+	{ "keys": ["super+shift+c"], "command": "phpcoverage_update" },
+    { "keys": ["super+alt+shift+c"], "command": "phpcoverage_clear_markers" },
+    { "keys": ["super+shift+g"], "command": "phpcoverage_generate_report" }
 ]
