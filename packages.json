@@ -1,0 +1,20 @@
+{
+    "schema_version": "1.2",
+    "packages": [
+        {
+            "name": "PHP Code Coverage",
+            "description": "A plugin for Sublime Text 2, which visualises PHP code coverage data in the editor.",
+            "author": "bradfeehan",
+            "homepage": "https://github.com/bradfeehan/SublimePHPCoverage",
+            "last_modified": "2013-29-03 02:25:00",
+            "platforms": {
+                "*": [
+                    {
+                        "version": "1.0.0",
+                        "url": "https://nodeload.github.com/bradfeehan/SublimePHPCoverage/zip/master"
+                    }
+                ]
+            }
+        }
+    ]
+}
