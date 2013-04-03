@@ -21,9 +21,9 @@ has been annotated with examples of common configurations.  Any of the default
 settings can be overridden via the user configuration file.
 
 Additionally, settings may be set on a per-project basis in the `.sublime-project`
-file. This is especially useful for setting the path to the clover report as it may differ for each project. To override a setting in a project simply add the key to the `.sublime-project`
+file. This is especially useful for setting the path to the Clover report as it may differ for each project. To override a setting in a project simply add the key to the `.sublime-project`
 settings object, prepended with `phpcoverage_`. For instance, to override
-`path_report` you would set `phpcoverage_path_report` to your `.sublime-project`
+`path_report` you would set `phpcoverage_path_report` in your `.sublime-project`
 file.
 
 ## Setting up PHPUnit
