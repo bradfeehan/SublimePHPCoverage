@@ -5,8 +5,8 @@ import sublime_plugin
 
 # Add current directory to Python's import path, to import php_coverage
 sys.path.append(os.path.dirname(__file__))
+from php_coverage.command import CoverageCommand
 from php_coverage.debug import debug_message
-from php_coverage.finder import CoverageFinder
 import php_coverage.mediator
 import php_coverage.watcher
 
@@ -48,32 +48,11 @@ class NewFileEventListener(sublime_plugin.EventListener):
         sublime.set_timeout_async(lambda: self.mediator.remove(view))
 
 
-class PhpCoverageUpdateCommand(sublime_plugin.TextCommand):
+class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
 
     """
     Updates the code coverage data for a file in a view.
     """
-
-    def __init__(self, view):
-        super(PhpCoverageUpdateCommand, self).__init__(view)
-        self._coverage_finder = None
-
-    def coverage_finder(self):
-        """
-        Gets the coverage finder for the command. If none is set, it
-        instantiates an instance of the default CoverageFinder class.
-        """
-        if not self._coverage_finder:
-            self._coverage_finder = CoverageFinder()
-
-        return self._coverage_finder
-
-    def coverage(self):
-        """
-        Finds the coverage file which contains coverage data for the
-        file open in the view which is running this command.
-        """
-        return self.coverage_finder().find(self.view.file_name())
 
     def run(self, edit):
         debug_message('Updating coverage for ' + self.view.file_name())
