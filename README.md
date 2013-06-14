@@ -29,12 +29,12 @@ file.
 ## Setting up PHPUnit
 
 Make sure PHPUnit is configured to output code coverage data to
-`build/log/clover.xml` (relative to your Sublime Text 2 project
+`build/logs/clover.xml` (relative to your Sublime Text 2 project
 root), in Clover format. You can do this with PHPUnit's
 [command-line arguments][1]:
 
 ```bash
-~/myProject$ phpunit --coverage-clover build/log/clover.xml
+~/myProject$ phpunit --coverage-clover build/logs/clover.xml
 ```
 
 ...or, preferably, in PHPUnit's [XML configuration file][2]:
@@ -44,7 +44,7 @@ root), in Clover format. You can do this with PHPUnit's
 <phpunit>
 	<!-- ... -->
 	<logging>
-		<log type="coverage-clover" target="build/log/clover.xml" />
+		<log type="coverage-clover" target="build/logs/clover.xml" />
 	</logging>
 	<!-- ... -->
 </phpunit>
