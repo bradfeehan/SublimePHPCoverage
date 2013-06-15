@@ -1,4 +1,6 @@
 import sublime_plugin
+
+from php_coverage.data import CoverageDataFactory
 from php_coverage.finder import CoverageFinder
 
 
@@ -24,7 +26,12 @@ class CoverageCommand(sublime_plugin.TextCommand):
 
     def coverage(self):
         """
-        Finds the coverage file which contains coverage data for the
-        file open in the view which is running this command.
+        Loads coverage data for the file open in the view which is
+        running this command.
         """
-        return self.get_coverage_finder().find(self.view.file_name())
+        filename = self.view.file_name()
+        coverage_file = self.get_coverage_finder().find(filename)
+        if (coverage_file):
+            return CoverageDataFactory().factory(coverage_file)
+
+        return None
