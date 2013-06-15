@@ -2,7 +2,7 @@ import os
 import threading
 import unittest
 
-from php_coverage.watcher import FileWatcher
+from php_coverage.watcher import CoverageWatcher, FileWatcher
 from unittest.mock import Mock, MagicMock
 
 CREATED = FileWatcher.CREATED
@@ -73,3 +73,54 @@ class TestFileWatcher(unittest.TestCase):
     def delete(self):
         if os.path.exists(self.file):
             os.remove(self.file)
+
+
+class TestCoverageWatcher(TestFileWatcher):
+
+    def setUp(self):
+        dir = os.path.dirname(__file__)
+        self.file = os.path.join(dir, 'watcher', 'test.txt')
+
+        factory = Mock()
+        factory.factory = MagicMock(return_value='return')
+
+        self.watcher = CoverageWatcher(self.file, factory)
+        self.detected = threading.Event()
+        self.delete()
+
+    def tearDown(self):
+        super(TestCoverageWatcher, self).tearDown()
+        factory = self.watcher.get_coverage_factory()
+        factory.factory.assert_called_once_with(self.file)
+
+    def test_created(self):
+        self.watcher.add_callback(CREATED, 1, lambda x: self.detect(x))
+        self.watcher.start()
+        self.create('created')
+        self.assertTrue(self.detected.wait(1))
+
+    def test_deleted(self):
+        self.watcher.add_callback(DELETED, 1, lambda x: self.detect(x))
+        self.create('deleted')
+        self.watcher.start()
+        self.delete()
+        self.assertTrue(self.detected.wait(1))
+
+    def test_modified(self):
+        self.watcher.add_callback(MODIFIED, 1, lambda x: self.detect(x))
+        self.create('modified1')
+        self.watcher.start()
+        self.modify('modified2')
+        self.assertTrue(self.detected.wait(1))
+
+    def test_unchanged(self):
+        self.watcher.add_callback(UNCHANGED, 1, lambda x: self.detect(x))
+        self.create('unchanged')
+        self.watcher.start()
+        self.modify('unchanged')
+        self.assertTrue(self.detected.wait(1))
+
+    def detect(self, data):
+        "Perform callback parameter assertions and set detected event"
+        self.assertEquals(data, 'return')
+        self.detected.set()

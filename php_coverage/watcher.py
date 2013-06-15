@@ -1,6 +1,7 @@
 import hashlib
 import os
 
+from php_coverage.data import CoverageDataFactory
 from php_coverage.debug import debug_message
 from php_coverage.threading import PollingThread
 
@@ -144,3 +145,44 @@ class FileWatcher(PollingThread):
         # save new mtime for next poll
         self.last_mtime = new_mtime
         self.last_hash = new_hash
+
+
+class CoverageWatcher(FileWatcher):
+
+    """
+    A FileWatcher which looks for changes to a coverage file, and
+    passes extra coverage-related data to the event callbacks.
+    """
+
+    def __init__(self, filename, coverage_factory=None):
+        super(CoverageWatcher, self).__init__(filename)
+        self.coverage_factory = coverage_factory
+
+    def get_coverage_factory(self):
+        """
+        Gets the coverage factory for this CoverageWatcher. If none is
+        set, it instantiates an instance of the CoverageDataFactory
+        class as a default.
+        """
+        if not self.coverage_factory:
+            self.coverage_factory = CoverageDataFactory()
+
+        return self.coverage_factory
+
+    def dispatch(self, event):
+        """
+        Dispatches an event, calling all relevant callbacks.
+
+        Overridden to pass coverage data to the callback, taken from
+        the coverage file being watched by this CoverageWatcher.
+        """
+        callbacks = self.callbacks[event]
+
+        debug_message("[CoverageWatcher] %s '%s'" % (event, self.filename))
+        debug_message("[CoverageWatcher] %d callbacks" % len(callbacks))
+
+        data = self.get_coverage_factory().factory(self.filename)
+
+        for callback in callbacks.values():
+            debug_message("[CoverageWatcher] Calling %s" % repr(callback))
+            callback(data)
