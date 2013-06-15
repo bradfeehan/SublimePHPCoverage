@@ -1,6 +1,7 @@
 *.py[co]
 
 # Packages
+/env/
 *.egg
 *.egg-info
 dist
