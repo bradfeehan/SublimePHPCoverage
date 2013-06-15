@@ -7,21 +7,40 @@ import sublime_plugin
 sys.path.append(os.path.dirname(__file__))
 from php_coverage.command import CoverageCommand
 from php_coverage.debug import debug_message
-import php_coverage.finder
-import php_coverage.mediator
-import php_coverage.updater
-import php_coverage.watcher
-
-CREATED = php_coverage.watcher.FileWatcher.CREATED
-DELETED = php_coverage.watcher.FileWatcher.DELETED
-MODIFIED = php_coverage.watcher.FileWatcher.MODIFIED
+from php_coverage.mediator import ViewWatcherMediator
+from php_coverage.updater import ViewUpdater
+from php_coverage.watcher import FileWatcher
 
 
-mediator = php_coverage.mediator.ViewWatcherMediator({
-    CREATED: lambda v: v.run_command("php_coverage_update"),
-    MODIFIED: lambda v: v.run_command("php_coverage_update"),
-    DELETED: lambda v: v.run_command("php_coverage_remove"),
+mediator = ViewWatcherMediator({
+    FileWatcher.CREATED: lambda view, data: update_view(view, data),
+    FileWatcher.MODIFIED: lambda view, data: update_view(view, data),
+    FileWatcher.DELETED: lambda view, data: update_view(view, data),
 })
+
+
+def update_view(view, coverage):
+    """
+    Updates the coverage data displayed in a view.
+
+    Arguments are the view to update, and the coverage data. The
+    coverage data should be a CoverageData object, which contains
+    the relevant coverage data for the file shown in the view. If the
+    coverage data doesn't exist for the file shown in the view, or the
+    coverage data is None, then the displayed coverage data will be
+    removed from the view.
+    """
+    if not coverage:
+        return
+
+    filename = view.file_name()
+    debug_message('Updating coverage for ' + filename)
+
+    file_coverage = coverage.get_file(filename)
+    if file_coverage:
+        ViewUpdater().update(view, file_coverage)
+    else:
+        debug_message("No coverage data found for %s" % filename)
 
 
 def plugin_loaded():
@@ -73,11 +92,9 @@ class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
     Updates the code coverage data for a file in a view.
     """
 
-    def run(self, edit):
-        debug_message('Updating coverage for ' + self.view.file_name())
-        updater = php_coverage.updater.ViewUpdater()
-        finder = php_coverage.finder.CoverageFinder()
-        coverage = finder.find(self.view.file_name())
+    def run(self, edit, coverage=None, **kwargs):
+        filename = self.view.file_name()
+        if not coverage:
+            coverage = self.coverage()
 
-        if coverage:
-            updater.update(self.view, coverage)
+        update_view(self.view, coverage)
