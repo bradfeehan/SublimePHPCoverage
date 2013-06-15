@@ -19,7 +19,7 @@ mediator = ViewWatcherMediator({
 })
 
 
-def update_view(view, coverage):
+def update_view(view, coverage=None):
     """
     Updates the coverage data displayed in a view.
 
@@ -30,17 +30,12 @@ def update_view(view, coverage):
     coverage data is None, then the displayed coverage data will be
     removed from the view.
     """
-    if not coverage:
-        return
 
     filename = view.file_name()
     debug_message('Updating coverage for ' + filename)
 
-    file_coverage = coverage.get_file(filename)
-    if file_coverage:
-        ViewUpdater().update(view, file_coverage)
-    else:
-        debug_message("No coverage data found for %s" % filename)
+    file_coverage = coverage.get_file(filename) if coverage else None
+    ViewUpdater().update(view, file_coverage)
 
 
 def plugin_loaded():

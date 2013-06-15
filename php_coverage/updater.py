@@ -11,11 +11,14 @@ class ViewUpdater():
     Handles updating the coverage data shown in a particular view.
     """
 
-    def update(self, view, coverage):
+    def update(self, view, coverage=None):
         """
         Updates a view with the coverage data in a particular file
         """
         self.remove(view)
+
+        if not coverage:
+            return
 
         self.annotate_lines(
             view=view,
