@@ -7,7 +7,9 @@ import sublime_plugin
 sys.path.append(os.path.dirname(__file__))
 from php_coverage.command import CoverageCommand
 from php_coverage.debug import debug_message
+import php_coverage.finder
 import php_coverage.mediator
+import php_coverage.updater
 import php_coverage.watcher
 
 CREATED = php_coverage.watcher.FileWatcher.CREATED
@@ -56,3 +58,9 @@ class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
 
     def run(self, edit):
         debug_message('Updating coverage for ' + self.view.file_name())
+        updater = php_coverage.updater.ViewUpdater()
+        finder = php_coverage.finder.CoverageFinder()
+        coverage = finder.find(self.view.file_name())
+
+        if coverage:
+            updater.update(self.view, coverage)
