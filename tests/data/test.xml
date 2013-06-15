@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<coverage generated="1370000000">
+    <project timestamp="1370000000">
+        <package name="TestPackage">
+            <file name="/path/to/file.php">
+                <class name="TestClass" namespace="TestNamespace">
+                    <metrics methods="1" coveredmethods="0"
+                        conditionals="0" coveredconditionals="0"
+                        statements="4" coveredstatements="0"
+                        elements="1" coveredelements="0"/>
+                </class>
+                <line num="10" type="method" name="testMethod"
+                    crap="6" count="0"/>
+                <line num="12" type="stmt" count="0"/>
+                <line num="13" type="stmt" count="0"/>
+                <line num="14" type="stmt" count="0"/>
+                <line num="15" type="stmt" count="0"/>
+                <metrics loc="16" ncloc="4" classes="1" methods="1"
+                    coveredmethods="0" conditionals="0"
+                    coveredconditionals="0" statements="4"
+                    coveredstatements="0" elements="5"
+                    coveredelements="0"/>
+            </file>
+        </package>
+    </project>
+</coverage>
