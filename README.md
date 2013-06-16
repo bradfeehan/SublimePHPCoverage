@@ -1,5 +1,7 @@
 # Sublime Text PHP Coverage Package
 
+[![Build Status](https://travis-ci.org/bradfeehan/SublimePHPCoverage.png?branch=master)](https://travis-ci.org/bradfeehan/SublimePHPCoverage)
+
 A plugin for Sublime Text 2, which visualises PHP code coverage data in
 the editor.
 
