@@ -3,6 +3,7 @@ import os
 from php_coverage.debug import debug_message
 from php_coverage.finder import CoverageFinder
 from php_coverage.helper import set_timeout_async
+from php_coverage.matcher import Matcher
 from php_coverage.watcher import CoverageWatcher
 
 
@@ -35,8 +36,9 @@ class ViewWatcherMediator():
     time a view is added using add(view).
     """
 
-    def __init__(self, callbacks={}, coverage_finder=None):
+    def __init__(self, callbacks={}, coverage_finder=None, matcher=None):
         self.coverage_finder = coverage_finder or CoverageFinder()
+        self.matcher = matcher or Matcher()
         self.callbacks = callbacks
         self.watchers = {}
 
@@ -46,6 +48,11 @@ class ViewWatcherMediator():
         """
         # find coverage file for the view's file
         filename = view.file_name()
+
+        if not self.matcher.should_include(filename):
+            debug_message("Ignoring excluded file '%s'" % filename)
+            return
+
         coverage = self.coverage_finder.find(filename)
 
         # nothing can be done if the coverage file can't be found

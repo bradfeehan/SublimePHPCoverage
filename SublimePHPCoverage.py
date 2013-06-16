@@ -101,6 +101,11 @@ class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
 
     def run(self, edit, coverage=None, **kwargs):
         filename = self.view.file_name()
+
+        if not self.should_include(filename):
+            debug_message("Ignoring excluded file '%s'" % filename)
+            return
+
         if not coverage:
             coverage = self.coverage()
 

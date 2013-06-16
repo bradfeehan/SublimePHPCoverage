@@ -10,6 +10,8 @@ class Config():
     keys = [
         "debug",
         "report_path",
+        "include",
+        "exclude",
     ]
 
     def __init__(self):
