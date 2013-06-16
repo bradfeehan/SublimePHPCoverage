@@ -10,6 +10,7 @@ class Config():
     keys = [
         "debug",
         "report_path",
+        "watch_report",
         "include",
         "exclude",
     ]

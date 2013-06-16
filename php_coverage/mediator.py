@@ -1,5 +1,6 @@
 import os
 
+from php_coverage.config import config
 from php_coverage.debug import debug_message
 from php_coverage.finder import CoverageFinder
 from php_coverage.helper import set_timeout_async
@@ -46,6 +47,9 @@ class ViewWatcherMediator():
         """
         Sets up a watcher for a newly opened view.
         """
+        if not config.watch_report:
+            return
+
         # find coverage file for the view's file
         filename = view.file_name()
 
