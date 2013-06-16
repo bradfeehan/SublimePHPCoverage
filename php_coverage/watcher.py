@@ -3,7 +3,7 @@ import os
 
 from php_coverage.data import CoverageDataFactory
 from php_coverage.debug import debug_message
-from php_coverage.threading import PollingThread
+from php_coverage.thread import PollingThread
 
 # Chunk size used to read file in
 CHUNK_SIZE = 1024 * 1024

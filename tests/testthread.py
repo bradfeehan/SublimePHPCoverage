@@ -1,8 +1,8 @@
 import unittest
 
-from php_coverage.threading import NullPollingThread
-from php_coverage.threading import PollingThread
-from php_coverage.threading import Timeout
+from php_coverage.thread import NullPollingThread
+from php_coverage.thread import PollingThread
+from php_coverage.thread import Timeout
 
 
 class NullPollingThreadTest(unittest.TestCase):
