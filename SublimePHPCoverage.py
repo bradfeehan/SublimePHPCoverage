@@ -55,7 +55,7 @@ def plugin_loaded():
             debug_message("[plugin_loaded] Found view %d" % view.id())
             mediator.add(view)
             set_timeout_async(
-                lambda: view.run_command('php_coverage_update'),
+                lambda: view.run_command('phpcoverage_update'),
                 1
             )
 
@@ -77,7 +77,7 @@ class NewFileEventListener(sublime_plugin.EventListener):
         update the code coverage to show it in the newly opened view.
         """
         mediator.add(view)
-        view.run_command('php_coverage_update')
+        view.run_command('phpcoverage_update')
 
     def on_load(self, view):
         """
@@ -93,7 +93,7 @@ class NewFileEventListener(sublime_plugin.EventListener):
         set_timeout_async(lambda: mediator.remove(view), 1)
 
 
-class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
+class PhpcoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
 
     """
     Updates the code coverage data for a file in a view.
@@ -110,3 +110,19 @@ class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
             coverage = self.coverage()
 
         update_view(self.view, coverage)
+
+
+class PhpcoverageUpdateAllCommand(CoverageCommand, sublime_plugin.TextCommand):
+
+    """
+    Updates the code coverage data for files in all open views.
+    """
+
+    def run(self, edit):
+        windows = sublime.windows() or []
+
+        for window in windows:
+            views = window.views() or []
+
+            for view in views:
+                view.run_command("phpcoverage_update")
