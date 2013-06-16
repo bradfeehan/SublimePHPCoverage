@@ -36,11 +36,11 @@ class CoverageDataTest(unittest.TestCase):
     def test_get_file(self):
         self.data.load()
         coverage = self.data.get_file('/path/to/file.php')
-        self.assertIs(type(coverage), FileCoverage)
+        self.assertIsInstance(coverage, FileCoverage)
 
     def test_get_file_implicit_load(self):
         coverage = self.data.get_file('/path/to/file.php')
-        self.assertIs(type(coverage), FileCoverage)
+        self.assertIsInstance(coverage, FileCoverage)
 
     def test_get_file_invalid(self):
         self.data.load()
