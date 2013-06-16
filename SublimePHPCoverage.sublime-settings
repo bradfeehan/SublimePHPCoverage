@@ -1,6 +1,9 @@
 {
 
     // Show debugging information in the Sublime console
-    "debug": false
+    "debug": false,
+
+    // The path to the Clover coverage report file
+    "report_path": "build/logs/clover.xml"
 
 }

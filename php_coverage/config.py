@@ -9,6 +9,7 @@ class Config():
 
     keys = [
         "debug",
+        "report_path",
     ]
 
     def __init__(self):
