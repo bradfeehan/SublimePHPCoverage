@@ -1,8 +1,9 @@
 
+
 def debug_message(message):
     """
     Prints a debug message to the Sublime console
-
-    TODO: Add a configurable plugin setting to disable console messages
     """
-    print("[PHPCoverage] " + str(message))
+    from php_coverage.config import config
+    if config.is_loaded() and config.debug:
+        print("[PHPCoverage] " + str(message))

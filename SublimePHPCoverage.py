@@ -6,6 +6,7 @@ import sublime_plugin
 # Add current directory to Python's import path, to import php_coverage
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from php_coverage.command import CoverageCommand
+from php_coverage.config import config
 from php_coverage.debug import debug_message
 from php_coverage.helper import set_timeout_async, sublime3
 from php_coverage.mediator import ViewWatcherMediator
@@ -44,6 +45,8 @@ def plugin_loaded():
     Called automatically by Sublime when the API is ready to be used.
     Updates coverage for any open views, and adds them to the mediator.
     """
+
+    config.load()
 
     # add open views to the mediator
     for window in sublime.windows():
