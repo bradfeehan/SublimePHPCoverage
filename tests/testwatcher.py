@@ -1,9 +1,16 @@
 import os
+import sys
 import threading
 import unittest
 
 from php_coverage.watcher import CoverageWatcher, FileWatcher
-from unittest.mock import Mock, MagicMock
+
+if sys.version_info >= (3, 3):
+    from unittest.mock import Mock, MagicMock
+else:
+    path = os.path.abspath(os.path.dirname(__file__))
+    sys.path.append(os.path.join(path, '..', 'dist'))
+    from mock import Mock, MagicMock
 
 CREATED = FileWatcher.CREATED
 DELETED = FileWatcher.DELETED
