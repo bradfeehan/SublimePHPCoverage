@@ -2,6 +2,7 @@ import os
 
 from php_coverage.debug import debug_message
 from php_coverage.finder import CoverageFinder
+from php_coverage.helper import set_timeout_async
 from php_coverage.watcher import CoverageWatcher
 
 
@@ -74,9 +75,9 @@ class ViewWatcherMediator():
     def prepare_callback(self, callback, view):
         """
         Wraps a callback function in a lambda to add a view as an
-        additional parameter.
+        additional parameter, and to be run in the main thread.
         """
-        return lambda data: callback(view, data)
+        return lambda data: set_timeout_async(lambda: callback(view, data), 1)
 
     def remove(self, view):
         """

@@ -7,6 +7,7 @@ import sublime_plugin
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from php_coverage.command import CoverageCommand
 from php_coverage.debug import debug_message
+from php_coverage.helper import set_timeout_async, sublime3
 from php_coverage.mediator import ViewWatcherMediator
 from php_coverage.updater import ViewUpdater
 from php_coverage.watcher import FileWatcher
@@ -50,8 +51,9 @@ def plugin_loaded():
         for view in window.views():
             debug_message("[plugin_loaded] Found view %d" % view.id())
             mediator.add(view)
-            sublime.set_timeout_async(
-                lambda: view.run_command('php_coverage_update')
+            set_timeout_async(
+                lambda: view.run_command('php_coverage_update'),
+                1
             )
 
     debug_message("[plugin_loaded] Finished.")
@@ -74,11 +76,18 @@ class NewFileEventListener(sublime_plugin.EventListener):
         mediator.add(view)
         view.run_command('php_coverage_update')
 
+    def on_load(self, view):
+        """
+        Synchronous fallback for on_load_async() for Sublime 2
+        """
+        if not sublime3:
+            self.on_load_async(view)
+
     def on_close(self, view):
         """
         Unregister any listeners for the view that was just closed.
         """
-        sublime.set_timeout_async(lambda: mediator.remove(view))
+        set_timeout_async(lambda: mediator.remove(view), 1)
 
 
 class PhpCoverageUpdateCommand(CoverageCommand, sublime_plugin.TextCommand):
