@@ -62,15 +62,15 @@ class TestFileWatcher(unittest.TestCase):
         self.modify('unchanged')
         self.assertTrue(self.detected.wait(1))
 
-    def create(self, content, mode='x'):
+    def create(self, content):
         if not os.path.exists(os.path.dirname(self.file)):
             os.mkdir(os.path.dirname(self.file))
 
-        with open(self.file, mode) as file:
+        with open(self.file, 'w') as file:
             file.write(content)
 
     def modify(self, content):
-        self.create(content, 'w')
+        self.create(content)
 
         # bump mtime 10s into the future
         new_atime = os.path.getatime(self.file) + 10
