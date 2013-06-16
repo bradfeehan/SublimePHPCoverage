@@ -1,0 +1,27 @@
+{
+
+    // Show debugging information in the Sublime console
+    "debug": false,
+
+    // The path to the Clover coverage report file
+    "report_path": "build/logs/clover.xml",
+
+    // Whether to watch coverage files or only update manually
+    "watch_report": true,
+
+    // Include file names that match these regex patterns
+    // Files will be annotated if their filename matches a regex in
+    // "includes", and none of the regexes in "excludes". These regexes
+    // will be applied to the absolute path of the file. Remember to
+    // escape backslashes and double quotes (JSON escaping)
+    "include": [
+        "\\.php$"
+    ],
+
+    // Exclude files that match these regex patterns
+    // Remember to escape backslashes and double quotes (JSON escaping)
+    "exclude": [
+        "[/\\\\]tests?[/\\\\].*"
+    ]
+
+}
