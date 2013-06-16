@@ -4,7 +4,7 @@ import sublime
 import sublime_plugin
 
 # Add current directory to Python's import path, to import php_coverage
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from php_coverage.command import CoverageCommand
 from php_coverage.debug import debug_message
 from php_coverage.mediator import ViewWatcherMediator
