@@ -1,0 +1,21 @@
+[
+    {
+        "id": "tools",
+        "children": [
+            {
+                "id": "phpcoverage",
+                "caption": "PHP Coverage",
+                "children": [
+                    {
+                        "caption": "Update All Open Files",
+                        "command": "phpcoverage_update_all"
+                    },
+                    {
+                        "caption": "Update Current File",
+                        "command": "phpcoverage_update"
+                    }
+                ]
+            }
+        ]
+    }
+]
