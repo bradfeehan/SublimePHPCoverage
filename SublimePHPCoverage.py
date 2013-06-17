@@ -126,3 +126,7 @@ class PhpcoverageUpdateAllCommand(CoverageCommand, sublime_plugin.TextCommand):
 
             for view in views:
                 view.run_command("phpcoverage_update")
+
+
+if not sublime3:
+    plugin_loaded()
