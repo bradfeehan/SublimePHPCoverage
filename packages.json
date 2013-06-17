@@ -6,12 +6,12 @@
             "description": "A plugin for Sublime Text 2 and 3, which visualises PHP code coverage data in the editor.",
             "author": "Brad Feehan",
             "homepage": "https://github.com/bradfeehan/SublimePHPCoverage",
-            "last_modified": "2013-06-16 13:29:00",
+            "last_modified": "2013-06-17 00:35:22",
             "platforms": {
                 "*": [
                     {
-                        "version": "0.2.0",
-                        "url": "https://nodeload.github.com/bradfeehan/SublimePHPCoverage/zip/0.2.0"
+                        "version": "0.2.1",
+                        "url": "https://nodeload.github.com/bradfeehan/SublimePHPCoverage/zip/0.2.1"
                     }
                 ]
             }
