@@ -53,6 +53,9 @@ class ViewWatcherMediator():
         # find coverage file for the view's file
         filename = view.file_name()
 
+        if filename is None:
+            return
+
         if not self.matcher.should_include(filename):
             debug_message("Ignoring excluded file '%s'" % filename)
             return
